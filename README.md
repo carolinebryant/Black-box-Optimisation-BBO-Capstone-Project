@@ -10,4 +10,4 @@ The main libraries used are scikit-learn, scipy, numpy, and PyTorch. Specificall
 - numpy: data handling and array operations throughout
 - PyTorch: introduced in week 5 for a Monte Carlo dropout MLP, where uncertainty estimation was needed beyond what scikit-learn's built-in models could offer.
 
-The README currently describes the project at a high level but doesn't capture the surrogate modelling approach, acquisition strategy, or the reasoning behind key design decisions. Please see the Model Card and Datasheet for more information.
+The README currently describes the project at a high level but doesn't capture the surrogate modelling approach, acquisition strategy, or the reasoning behind key design decisions. Please see the [Model Card](/Documentation/Model_Card.md) and [Datasheet](/Documentation/Datasheet.md) for more information.
