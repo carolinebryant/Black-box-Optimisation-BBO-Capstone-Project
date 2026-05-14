@@ -50,7 +50,7 @@ An 8D black-box function — the highest-dimensional in the set. The output repr
 
 ## Details — Per-Function Strategy
 
-Each function was treated separately. The strategy for each one was driven by the function description, per-round observations and data, and what they suggested about the underlying structure of that specific function. Each surrogate was chosen to match that structure, and adjusted accordingly. Surrogate choice and tuning evolved over 13 weeks based on per-round diagnostics (LOO calibration, SHAP, partial dependence plots, residual analysis). The descriptions below reflect the final approach for each function.
+Each function was treated separately. The strategy for each one was driven by the function description, per-round observations and data, and what they suggested about the underlying structure of that specific function. Each surrogate was chosen to match that structure, and adjusted accordingly. Surrogate choice and tuning evolved over 13 weeks based on per-round diagnostics (LOO calibration, SHAP, partial dependence plots, residual analysis). For a full rundown of my week-by-week changes, and results from week-to-week please see this excel spreadsheet on my google drive [BBO_Overview](https://docs.google.com/spreadsheets/d/1aS1qp8pqvZUf_lPhmIQLlWpjp3UZw6EVs_FPUYldQnc/edit?usp=sharing). The descriptions below reflect the final approach for each function.
 
 **Decision process.**  
 At each round, candidate inputs are evaluated using a surrogate model and an acquisition function (e.g. UCB, EI, or argmax). The surrogate provides predicted mean and uncertainty, and the acquisition function balances exploitation and exploration. In some cases, this process is staged (e.g. filtering followed by refinement).
