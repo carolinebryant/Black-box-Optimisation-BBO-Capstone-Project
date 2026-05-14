@@ -93,6 +93,7 @@ At each round, candidate inputs are evaluated using a surrogate model and an acq
 ## Performance and results
 
 Best output values achieved
+
 **Function 1 — Radiation Detection (2D)**:        1.9017 (Week 12)
 
 **Function 2 — Noisy Log-Likelihood (2D)**:       0.6848 (Week 8)
