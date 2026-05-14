@@ -18,6 +18,7 @@ All eight functions are synthetic black-box functions provided by ICL whose inte
 **Function 1** 
 Input: (10,2), Output: (10,) — Maximise
 A 2D contamination source detection function. It simulates a radiation-like field where proximity to hidden sources yields non-zero readings. The function returns signal strength based on how close the input coordinates are to those sources, which vary in intensity.
+
 **Function 2** 
 Input: (10,2), Output: (10,) — Maximise
 A noisy 2D black-box function returning a log-likelihood score. The landscape contains multiple local optima, and outputs are stochastic, so repeated evaluations at the same point may differ.
