@@ -93,12 +93,19 @@ At each round, candidate inputs are evaluated using a surrogate model and an acq
 
 Best output values achieved
 **Function 1 — Radiation Detection (2D)**:        1.9017 (Week 12)
+
 **Function 2 — Noisy Log-Likelihood (2D)**:       0.6848 (Week 8)
+
 **Function 3 — Drug Discovery (3D)**:            -0.00006 (Week 6)
+
 **Function 4 — Warehouse Placement (4D)**:        0.6309 (Week 2)
+
 **Function 5 — Chemical Yield (4D)**:             73,499.40 (Week 12)
+
 **Function 7 — ML Hyperparameters (6D)**:        -0.1244 (Week 12)
+
 **Function 7 — ML Hyperparameters (6D)**:         2.8536 (Week 10)
+
 **Function 8 — 8D Black-Box**:                    9.9244 (Week 10)
 
 ## Collection process
