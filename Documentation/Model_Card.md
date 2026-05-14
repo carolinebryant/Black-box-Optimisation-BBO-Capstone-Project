@@ -4,7 +4,17 @@
 
 - **Name:** Per-Function Surrogate-Based Optimisation Suite (BBO Capstone)
 - **Type:** Sequential model-based optimisation. Eight independent per-function strategies, each built around a surrogate model (which learns the shape of the black-box function from observed points) and an acquisition function (which scores candidate inputs to pick the next query).
-- **Version:** v13 
+- **Version:** v13
+
+## Model Description
+
+**Input:** Per-function real-valued vectors ranging from 2D to 8D, with each dimension typically in [0, 1] (Function 5 extends to [0, 5] based on observed data). Inputs are submitted as hyphen-separated strings to ICL's evaluation server.
+
+**Output:** A single scalar value per function per query, representing the black-box function's evaluation at that input. Output scales vary widely across functions (e.g. Function 1 ranges from near-zero to ~1.9, Function 5 from ~2,200 to ~73,500).
+
+## Model Architecture and Strategy
+
+Eight independent surrogate models, one per function. Surrogate classes used include Gaussian Processes, ExtraTrees, SVR, Random Forests, a Residual GP, and an MC-Dropout MLP — each paired with an acquisition function (EI, UCB, LCB, or argmax). Per-function strategy details and weekly performance trends are documented in the [Datasheet](https://github.com/carolinebryant/Black-box-Optimisation-BBO-Capstone-Project/blob/main/Documentation/Datasheet.md).
 
 ## Intended Use
 
@@ -81,6 +91,15 @@ At each round, candidate inputs are evaluated using a surrogate model and an acq
 - Surrogate miscalibration can lead to over- or under-exploration, particularly for GP uncertainty in sparse regions and MC-dropout in high dimensions.
 - Acquisition functions (UCB/EI) may exploit misleading uncertainty estimates, reinforcing suboptimal regions.
 - Filtering strategies (e.g. F7) risk overfitting to small subsets and excluding globally optimal regions.
+
+## Trade-offs
+
+- **GP vs tree-based surrogates.** GPs provide calibrated uncertainty estimates for acquisition functions but struggle with non-stationarity (F4) and flat regions (F3). Tree-based models (ExtraTrees, RF) handle non-linearity better but lack native uncertainty, requiring workarounds like ensemble variance or pairing with a GP.
+- **Exploitation vs exploration.** Late-round kappa and xi values were reduced toward zero on several functions (F1, F2, F4) to exploit known good regions. This risks missing undiscovered optima but is appropriate given the limited remaining budget.
+- **SVR as pre-filter vs standalone surrogate.** SVR provides fast, stable predictions for candidate filtering (F5, F6) but returns no uncertainty estimate. Where used as a pre-filter (F5), a GP scores the survivors; where used standalone (F6), acquisition is pure argmax with no exploration term.
+- **Fixed vs learned length scales.** Learned (ARD) length scales adapt to the data but can overfit with few observations (F4's x3 hitting the upper bound). Fixed length scales tuned via LOO grid search proved more stable on small datasets but require manual retuning as data accumulates.
+- **Weighted vs unweighted loss.** Weighting training loss toward high-value points (F8) or near-zero points (F3) improves surrogate accuracy where it matters most, at the cost of worse predictions elsewhere in the input space.
+
 
 ## Ethical Considerations
 
