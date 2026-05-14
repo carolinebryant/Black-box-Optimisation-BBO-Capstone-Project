@@ -8,6 +8,45 @@ This dataset was provided by the Imperial College London Computing Department an
 
 The dataset consists of initial observations for 8 black-box functions, each stored in a dedicated folder (`function_1` through `function_8`) containing two NumPy files: `initial_inputs.npy` (the query points) and `initial_outputs.npy` (the corresponding function evaluations). Input dimensionality ranges from 2D to 8D and sample sizes from 10 to 40 points per function. Inputs fall roughly within [0, 1], though some values exceed 1.0. Weekly queries are submitted to the evaluation server as hyphen-separated strings of the form `x_1-x_2-...-x_n`, where each `x_i` is given to six decimal places (e.g. `0.123456-0.654321` for a 2D function). The data is deliberately sparse, providing only a rough initial sketch of each function's landscape, with no ground-truth labels, analytic form, or noise characterisation disclosed. The files represent the full starter data released to students. Train/test/validation splits do not apply, since all points are used to fit the surrogate models and evaluation is performed externally via weekly query submissions. The dataset contains no personal data, no human subjects, no demographic subpopulations, and no sensitive or offensive content.
 
+## Nature of the data
+
+All eight functions are synthetic black-box functions provided by ICL whose internal mechanics are unknown, and only input-output pairs are observable.
+
+#### Descriptions of functions
+(Function - Input, Output, Optimisation goal, Descriptions of sample applications)
+
+**Function 1** 
+Input: (10,2), Output: (10,) — Maximise
+A 2D contamination source detection function. It simulates a radiation-like field where proximity to hidden sources yields non-zero readings. The function returns signal strength based on how close the input coordinates are to those sources, which vary in intensity.
+**Function 2** 
+Input: (10,2), Output: (10,) — Maximise
+A noisy 2D black-box function returning a log-likelihood score. The landscape contains multiple local optima, and outputs are stochastic, so repeated evaluations at the same point may differ.
+
+**Function 3** 
+Input: (15,3), Output: (15,) — Maximise
+A drug discovery simulation taking three compound concentrations as input. The function estimates the negative of adverse reactions, so higher values correspond to fewer side effects.
+
+**Function 4** 
+Input: (30,4) → Output: (30,) — Maximise
+A 4D function modelling the performance of an ML surrogate used for warehouse product placement. The output measures how closely the surrogate matches an expensive baseline calculation. The landscape is dynamic with many local optima.
+
+**Function 5** 
+Input: (20,4), Output: (20,) — Maximise
+A 4D black-box function representing chemical process yield. Typically unimodal with a single peak.
+
+**Function 6** 
+Input: (20,5), Output: (20,) — Maximise
+A 5D recipe optimisation function scoring combinations of five ingredients across factors like flavour, consistency, calories, waste, and cost. Each factor contributes negatively, so all outputs are negative and the optimum is the value closest to zero.
+
+**Function 7** 
+Input: (30,6), Output: (30,) — Maximise
+A 6D function representing ML model performance as a function of six hyperparameters (e.g. learning rate, regularisation, layer count). It returns a metric such as accuracy or F1. Prior knowledge of common configurations may inform the search.
+
+**Function 8** 
+Input: (40,8) → Output: (40,) — Maximise
+An 8D black-box function — the highest-dimensional in the set. The output represents a performance-like metric (e.g. validation accuracy between 0 and 1). At this dimensionality, the landscape is complex enough that strong local maxima are more realistic targets than the global optimum.
+
+
 ## Details — Per-Function Strategy
 
 Each function was treated separately. The strategy for each one was driven by the function description, per-round observations and data, and what they suggested about the underlying structure of that specific function. Each surrogate was chosen to match that structure, and adjusted accordingly. Surrogate choice and tuning evolved over 13 weeks based on per-round diagnostics (LOO calibration, SHAP, partial dependence plots, residual analysis). The descriptions below reflect the final approach for each function.
